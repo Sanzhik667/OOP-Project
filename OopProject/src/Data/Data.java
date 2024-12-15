@@ -38,7 +38,7 @@ public class Data implements Serializable{
 	public static HashSet<Student> Students = new HashSet<Student>();	
 	public static Vector<Course> Courses = new Vector<Course>();	
 	public static HashSet<Order> Orders = new HashSet<Order>();	
-	public static Vector<News> Newss = new Vector<>();
+	public static Vector<News> Newss = new Vector<News>();
 	
 	
 	public  void serAll() throws IOException {

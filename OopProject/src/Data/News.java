@@ -22,4 +22,5 @@ public class News() implements Serializable{
 		return "[" + timestamp + "]" + title + "\n" + content;
 	}
 	
+	//
 }

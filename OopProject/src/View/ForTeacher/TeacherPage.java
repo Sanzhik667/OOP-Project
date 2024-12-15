@@ -43,7 +43,7 @@ public class TeacherPage extends ProjectSystem {
                     viewStudents();
                     break;
                 case 4:
-                	showNews();
+                	showNews();  
                 case 5:
                     isRunning = false; // Exit the loop to go back
                     break;

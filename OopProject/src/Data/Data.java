@@ -29,7 +29,7 @@ public class Data implements Serializable{
 		return Instance;
 	}
 	
-	
+	//
 	
 	public static HashSet<Employee> Employees = new HashSet<Employee>();
 	public static HashSet<Admin> Admins = new HashSet<Admin>();

@@ -40,7 +40,7 @@ public class ManagerPage extends ProjectSystem {
                 case 4:
                 	showNews();
                 case 5:
-                	manageNews();
+                	manageNews(scanner);
                 case 6:
                     isRunning = false; // Выход из текущего меню
                     break;

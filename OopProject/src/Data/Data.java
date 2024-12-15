@@ -129,7 +129,7 @@ public class Data implements Serializable{
 		order.flush();
 		order.close();
 	}
-	public void serializeNews() throw IOExeption() {
+	public void serializeNews() throws IOExeption() {
 		FileOutputStream fos = new FileOutputStream("news");
 		ObjectOutputStream news = new ObjectOutputStream(fos);
 		news.writeObject(Newss);
@@ -222,7 +222,7 @@ public class Data implements Serializable{
 		return Orders;
 	}
 	
-	public Vector<News> deserializeNews() throw IOException, ClassNotFoundException {
+	public Vector<News> deserializeNews() throws IOException, ClassNotFoundException {
 		try {
 		FileInputStream fis = new FileInputStream("news");
 		ObjectInputStream news = new ObjectInputStream(fis);

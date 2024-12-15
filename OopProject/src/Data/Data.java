@@ -239,6 +239,6 @@ public class Data implements Serializable{
 
 	public static Course course = new Course();
 	public static Order order = new Order();
-	
+	public static News news = new News();
 }
 

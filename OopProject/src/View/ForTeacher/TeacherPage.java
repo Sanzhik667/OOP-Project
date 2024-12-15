@@ -27,7 +27,8 @@ public class TeacherPage extends ProjectSystem {
             System.out.println("1. Manage Courses");
             System.out.println("2. Assign Grades");
             System.out.println("3. View Students");
-            System.out.println("4. Go Back");
+            System.out.println("4. Show News: ");
+            System.out.println("5. Go Back");
             System.out.print("Enter your choice: ");
             int choice = scanner.nextInt();
 
@@ -42,6 +43,8 @@ public class TeacherPage extends ProjectSystem {
                     viewStudents();
                     break;
                 case 4:
+                	showNews();
+                case 5:
                     isRunning = false; // Exit the loop to go back
                     break;
                 default:
@@ -133,4 +136,16 @@ public class TeacherPage extends ProjectSystem {
         System.out.println("Press Enter to go back...");
         new Scanner(System.in).nextLine();
     }
+    
+    public void showNews() {
+		if(Data.Newss.isEmpty()){
+			System.out.println("There is no news.");
+		}
+		else {
+			System.out.println("Latest news: ");
+			for(News news : Data.Newss) {
+				System.out.println(news);
+			}
+		}
+	}
 }

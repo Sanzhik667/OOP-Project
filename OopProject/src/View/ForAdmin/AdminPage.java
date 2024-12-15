@@ -30,7 +30,8 @@ public class AdminPage extends ProjectSystem
 			System.out.println("1. Add new user");
 			System.out.println("2. Remove user");
 			System.out.println("3. Update user");
-			System.out.println("4. Exit");
+			System.out.println("4. Show News");
+			System.out.println("6. Exit");
 			System.out.print("Choose one option: ");
 			int choice = scanner.nextInt();
 
@@ -44,7 +45,9 @@ public class AdminPage extends ProjectSystem
                 case 3:
                     updateUser(scanner);
                     break;
-				case 4: 
+                case 4:
+                	showNews();
+				case 5: 
 					isRunning = false;
 					System.out.println("Exiting from admin panel.");
                 default:
@@ -118,6 +121,17 @@ public class AdminPage extends ProjectSystem
 	}
 	
 	
+	public void showNews() {
+		if(Data.Newss.isEmpty()){
+			System.out.println("There is no news.");
+		}
+		else {
+			System.out.println("Latest news: ");
+			for(News news : Data.Newss) {
+				System.out.println(news);
+			}
+		}
+	}
 	
 	
 	@Override

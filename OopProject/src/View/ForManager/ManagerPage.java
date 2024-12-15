@@ -21,7 +21,9 @@ public class ManagerPage extends ProjectSystem {
             System.out.println("1. Process Requests");
             System.out.println("2. View All Users");
             System.out.println("3. Manage Employees");
-            System.out.println("4. Go Back");
+            System.out.println("4. Show News: ");
+            System.out.println("5. Add new News: ")
+            System.out.println("6. Go Back");
             System.out.print("Enter your choice: ");
             int choice = scanner.nextInt();
 
@@ -36,6 +38,10 @@ public class ManagerPage extends ProjectSystem {
                     manageEmployees();
                     break;
                 case 4:
+                	showNews();
+                case 5:
+                	manageNews();
+                case 6:
                     isRunning = false; // Выход из текущего меню
                     break;
                 default:
@@ -125,9 +131,31 @@ public class ManagerPage extends ProjectSystem {
         }
         goBack();
     }
+    
+    public void showNews() {
+		if(Data.Newss.isEmpty()){
+			System.out.println("There is no news.");
+		}
+		else {
+			System.out.println("Latest news: ");
+			for(News news : Data.Newss) {
+				System.out.println(news);
+			}
+		}
+	}
+    
+    public void manageNews(Scanner scanner) {
+		System.out.println("{Add new News}");
+		System.out.println("Enter title of the news: ");
+		String title = scanner.nextLine();
+		System.out.println("Enter content of the news: ");
+		String content = scanner.nextLine();
+		Data.Newss.add(new News(title, content));
+		System.out.println("News added successful!");
 
     private void goBack() {
         System.out.println("Press Enter to go back...");
         new Scanner(System.in).nextLine();
     }
+   
 }

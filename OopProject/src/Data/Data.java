@@ -38,7 +38,7 @@ public class Data implements Serializable{
 	public static HashSet<Student> Students = new HashSet<Student>();	
 	public static Vector<Course> Courses = new Vector<Course>();	
 	public static HashSet<Order> Orders = new HashSet<Order>();	
-
+	public static Vector<News> Newss = new Vector<>();
 	
 	
 	public  void serAll() throws IOException {
@@ -129,6 +129,13 @@ public class Data implements Serializable{
 		order.flush();
 		order.close();
 	}
+	public void serializeNews() throw IOExeption() {
+		FileOutputStream fos = new FileOutputStream("news");
+		ObjectOutputStream news = new ObjectOutputStream(fos);
+		news.writeObject(Newss);
+		news.flush();
+		news.close();
+	}
 	
 	
 /*DESERIALIZATION*/
@@ -214,6 +221,16 @@ public class Data implements Serializable{
 		catch(EOFException e) {}
 		return Orders;
 	}
+	
+	public Vector<News> deserializeNews() throw IOException, ClassNotFoundException {
+		try {
+		FileInputStream fis = new FileInputStream("news");
+		ObjectInputStream news = new ObjectInputStream(fis);
+		Newss = (Vector<News>) news.readObject();
+		news.close();
+		}
+		catch(EOFException e) {}
+		return Newss;
 	
 	public static Admin admin = new Admin();
 	public static Manager manager = new Manager();

@@ -47,7 +47,7 @@ public class ManagerPage extends ProjectSystem {
                 default:
                     System.out.println("Invalid choice. Try again.");
             }
-        }
+        } //
     }
 
     private void processRequests() {

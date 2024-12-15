@@ -1,7 +1,8 @@
 package Data;
 
 import java.io.Serializable;
-import time.LocalDateTime
+
+import time.LocalTime
 
 public class News() implements Serializable{
 	
@@ -9,12 +10,12 @@ public class News() implements Serializable{
 	
 	private String title;
 	private String content;
-	private LocalDateTime timestamp;
+	private LocalTime timestamp;
 	
 	public News(String title, String content, LocalDateTime timestamp) {
 		this.title = title;
 		this.content = content;
-		this.timestamp = LocalDateTime.now();
+		this.timestamp = LocalTime.now();
 	}
 	
 	@Override

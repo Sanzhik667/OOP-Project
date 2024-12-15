@@ -1,5 +1,4 @@
-package View.ForStudent ;
-
+package View.ForStudent;
 
 /**
  * <!-- begin-user-doc -->
@@ -7,15 +6,26 @@ package View.ForStudent ;
  * @generated
  */
 
-import java.util.Scanner;
-
+import Data.Organizations;
+import Data.Data;
+import Enums.OrganizationName;
 import System.ProjectSystem;
+import Users.Student;
 import Users.User;
+import Users.News;
+
+import java.util.List;
+import java.util.Scanner;
 
 public class StudentPage extends ProjectSystem {
 
+    private Student currentStudent;
+    private List<Organizations> organizationsList;
+
     public StudentPage(User currentUser) {
         super(currentUser);
+        this.currentStudent = (Student) currentUser;
+        this.organizationsList = Organizations.loadOrganizations();
     }
 
     @Override
@@ -24,11 +34,11 @@ public class StudentPage extends ProjectSystem {
         Scanner scanner = new Scanner(System.in);
 
         while (isRunning) {
-            
             System.out.println("1. View Courses");
             System.out.println("2. View Transcript");
-            System.out.println("3. Show News: ")
-            System.out.println("4. Go Back");
+            System.out.println("3. Manage Organizations");
+            System.out.println("4. Show News");
+            System.out.println("5. Go Back");
             System.out.print("Enter your choice: ");
             int choice = scanner.nextInt();
 
@@ -40,8 +50,12 @@ public class StudentPage extends ProjectSystem {
                     viewTranscript();
                     break;
                 case 3:
-                	showNews();
+                    manageOrganizations();
+                    break;
                 case 4:
+                    showNews();
+                    break;
+                case 5:
                     isRunning = false; // Выход из текущего меню
                     goBack();
                     break;
@@ -52,11 +66,10 @@ public class StudentPage extends ProjectSystem {
     }
 
     private void goBack() {
-		// TODO Auto-generated method stub
-		
-	}
+        // TODO Auto-generated method stub
+    }
 
-	private void viewCourses() {
+    private void viewCourses() {
         boolean isRunning = true;
         Scanner scanner = new Scanner(System.in);
 
@@ -121,7 +134,6 @@ public class StudentPage extends ProjectSystem {
                 case 1:
                     showGrades();
                     break;
-             
                 case 2:
                     isRunning = false; // Возврат в основное меню
                     break;
@@ -142,16 +154,115 @@ public class StudentPage extends ProjectSystem {
     }
 
     public void showNews() {
-		if(Data.Newss.isEmpty()){
-			System.out.println("There is no news.");
-		}
-		else {
-			System.out.println("Latest news: ");
-			for(News news : Data.Newss) {
-				System.out.println(news);
-			}
-		}
-	}
-    
-    
+        if (Data.Newss.isEmpty()) {
+            System.out.println("There is no news.");
+        } else {
+            System.out.println("Latest news: ");
+            for (News news : Data.Newss) {
+                System.out.println(news);
+            }
+        }
+    }
+
+    // Методы для управления организациями
+    private void manageOrganizations() {
+        boolean isRunning = true;
+        Scanner scanner = new Scanner(System.in);
+
+        while (isRunning) {
+            System.out.println("** Manage Organizations **");
+            System.out.println("1. Join Organization");
+            System.out.println("2. Leave Organization");
+            System.out.println("3. Become Organization Leader");
+            System.out.println("4. View My Organizations");
+            System.out.println("5. Back");
+            System.out.print("Enter your choice: ");
+            int choice = scanner.nextInt();
+            scanner.nextLine(); // Consume newline
+
+            switch (choice) {
+                case 1:
+                    joinOrganization(scanner);
+                    break;
+                case 2:
+                    leaveOrganization(scanner);
+                    break;
+                case 3:
+                    becomeLeader(scanner);
+                    break;
+                case 4:
+                    viewMyOrganizations();
+                    break;
+                case 5:
+                    isRunning = false; // Возврат в основное меню
+                    break;
+                default:
+                    System.out.println("Invalid choice. Try again.");
+            }
+        }
+    }
+
+    private void joinOrganization(Scanner scanner) {
+        System.out.println("Available Organizations:");
+        for (OrganizationName name : OrganizationName.values()) {
+            System.out.println("- " + name);
+        }
+        System.out.print("Enter the organization name to join: ");
+        String orgName = scanner.nextLine().toUpperCase();
+
+        try {
+            OrganizationName organizationName = OrganizationName.valueOf(orgName);
+            Organizations org = findOrganizationByName(organizationName);
+            currentStudent.joinOrganization(org);
+            Organizations.saveOrganizations(organizationsList);
+        } catch (IllegalArgumentException e) {
+            System.out.println("Invalid organization name.");
+        }
+    }
+
+    private void leaveOrganization(Scanner scanner) {
+        System.out.print("Enter the organization name to leave: ");
+        String orgName = scanner.nextLine().toUpperCase();
+
+        try {
+            OrganizationName organizationName = OrganizationName.valueOf(orgName);
+            Organizations org = findOrganizationByName(organizationName);
+            currentStudent.leaveOrganization(org);
+            Organizations.saveOrganizations(organizationsList);
+        } catch (IllegalArgumentException e) {
+            System.out.println("Invalid organization name.");
+        }
+    }
+
+    private void becomeLeader(Scanner scanner) {
+        System.out.print("Enter the organization name to become a leader: ");
+        String orgName = scanner.nextLine().toUpperCase();
+
+        try {
+            OrganizationName organizationName = OrganizationName.valueOf(orgName);
+            Organizations org = findOrganizationByName(organizationName);
+            currentStudent.becomeLeader(org);
+            Organizations.saveOrganizations(organizationsList);
+        } catch (IllegalArgumentException e) {
+            System.out.println("Invalid organization name.");
+        }
+    }
+
+    private void viewMyOrganizations() {
+        System.out.println("Your Organizations:");
+        for (OrganizationName orgName : currentStudent.getOrganizations()) {
+            System.out.println("- " + orgName);
+        }
+    }
+
+    private Organizations findOrganizationByName(OrganizationName name) {
+        for (Organizations org : organizationsList) {
+            if (org.getOrganizationName() == name) {
+                return org;
+            }
+        }
+        Organizations newOrg = new Organizations(name);
+        organizationsList.add(newOrg);
+        return newOrg;
+    }
 }

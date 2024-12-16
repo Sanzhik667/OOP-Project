@@ -1,5 +1,6 @@
 package Users;
 
+import java.io.Serializable;
 
 /**
  * <!-- begin-user-doc -->
@@ -7,13 +8,9 @@ package Users;
  * @generated
  */
 
-public class Admin extends Employee
+public class Admin extends Employee implements Serializable
 {
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 */
+	private static final long serialVersionUID = 3998840202673599825L;
 	public Admin(){
 		super();
 	}

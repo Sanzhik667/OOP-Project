@@ -18,8 +18,13 @@ public class Course {
 //	public vector teachers;
 	public Course(String courseName, Faculty school, CourseType courseType, int courseId){
 		super();
+		
 	}
-
+	public Course(){
+		
+	}
+	
+	
 
 	
 }

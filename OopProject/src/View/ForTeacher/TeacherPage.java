@@ -1,6 +1,8 @@
 package View.ForTeacher ;
 
 import java.util.Scanner;
+import java.util.Map;
+import java.util.HashMap;
 
 import System.ProjectSystem;
 import Users.User;
@@ -12,9 +14,12 @@ import Users.User;
  */
 
 public class TeacherPage extends ProjectSystem {
-
-    public TeacherPage(User currentUser) {
+	
+	private Map<String Map<String, Integer>> marksDataBase;
+	
+    public TeacherPage(User currentUser, Map<String Map<String, Integer>> marksDataBase) {
         super(currentUser);
+        this.marksDataBase = marksDataBase;
     }
 
     @Override
@@ -25,9 +30,10 @@ public class TeacherPage extends ProjectSystem {
         while (isRunning) {
             System.out.println("Welcome to the Teacher Panel!");
             System.out.println("1. Manage Courses");
-            System.out.println("2. Assign Grades");
+            System.out.println("2. Add/Update Marks");
             System.out.println("3. View Students");
             System.out.println("4. Show News: ");
+            
             System.out.println("5. Go Back");
             System.out.print("Enter your choice: ");
             int choice = scanner.nextInt();
@@ -37,7 +43,7 @@ public class TeacherPage extends ProjectSystem {
                     manageCourses();
                     break;
                 case 2:
-                    assignGrades();
+                	AddUpdateMarks();
                     break;
                 case 3:
                     viewStudents();
@@ -111,15 +117,17 @@ public class TeacherPage extends ProjectSystem {
         goBack();
     }
 
-    private void assignGrades() {
+    private void AddUpdateMarks(Scanner scanner) {
         Scanner scanner = new Scanner(System.in);
-        System.out.print("Enter student name: ");
-        String studentName = scanner.nextLine();
+        System.out.print("Enter student FIRST name: ");
+        String studentFirstName = scanner.nextLine();
+        Map<String, Integer> studentsMarks = marksDataBase.computIfAbsent(studentFirstName, k -> new HashMap<>());
         System.out.print("Enter course name: ");
         String courseName = scanner.nextLine();
-        System.out.print("Enter grade: ");
-        String grade = scanner.nextLine();
-        System.out.println("Grade \"" + grade + "\" assigned to " + studentName + " for the course \"" + courseName + "\".");
+        System.out.print("Enter mark: ");
+        int mark = scanner.nextInt();
+        scanner.nextLine();
+        System.out.println("Mark added/updated for student: " + studentFirstName + " in course " + courseName);
         goBack();
     }
 

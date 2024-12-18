@@ -3,19 +3,26 @@ package View.ForStudent ;
 
 /**
  * <!-- begin-user-doc -->
+
  * <!--  end-user-doc  -->
  * @generated
  */
 
 import java.util.Scanner;
+import java.util.Map;
 
 import System.ProjectSystem;
 import Users.User;
+import Data.News;
+
 
 public class StudentPage extends ProjectSystem {
-
-    public StudentPage(User currentUser) {
+	private String studentName;
+	private Map<String Map<String, Integer>> marksDataBase;
+    public StudentPage(User currentUser, Map<String Map<String, Integer>> marksDataBase, String studentName) {
         super(currentUser);
+        this.marksDataBase = marksDataBase;
+        this.studentName = currentUser.getFirstName()
     }
 
     @Override
@@ -27,7 +34,7 @@ public class StudentPage extends ProjectSystem {
             
             System.out.println("1. View Courses");
             System.out.println("2. View Transcript");
-            System.out.println("3. Show News: ")
+            System.out.println("3. Show News")
             System.out.println("4. Go Back");
             System.out.print("Enter your choice: ");
             int choice = scanner.nextInt();
@@ -111,7 +118,7 @@ public class StudentPage extends ProjectSystem {
 
         while (isRunning) {
             System.out.println("** View Transcript **");
-            System.out.println("1. Show Grades");
+            System.out.println("1. View Marks");
             System.out.println("2. Download Transcript");
             System.out.println("3. Back");
             System.out.print("Enter your choice: ");
@@ -119,10 +126,11 @@ public class StudentPage extends ProjectSystem {
 
             switch (choice) {
                 case 1:
-                    showGrades();
+                    ViewMarks();
                     break;
-             
                 case 2:
+                	DownloadTranscript();
+                case 3:
                     isRunning = false; // Возврат в основное меню
                     break;
                 default:
@@ -131,23 +139,91 @@ public class StudentPage extends ProjectSystem {
         }
     }
 
-    private void showGrades() {
-        System.out.println("Displaying grades...");
-        // Здесь можно реализовать вывод оценок студента из базы данных.
-        System.out.println("Math: A");
-        System.out.println("Programming: B+");
-        System.out.println("Data Structures: A-");
-        System.out.println("Press Enter to go back...");
+    private void viewMarks() {
+        System.out.println("\n--YOUR MARKS--");
+        Map<String Map<String, Integer>> studentMarks = marksDataBase.get(studentFirstName);
+        if(studentMarks == null || studentMarks.isEmpty()) {
+        	System.out.println("No marks available :(");
+        }
+        else {
+        	System.out.println("SUBJECT | GRADE | LETTER GRADE");
+        	System.out.println("-------------------------");
+        	int totalCount = 0;
+        	int subjectCount = 0;
+        	for(Map.Entry<String, Integer> : studentMarks.entrySet()) {
+        		String course = entry.getKey();
+        		int mark = entry.getValue();
+        		String LetterGrade = entry.getLetterGrade();
+        		String.out.println(course + " | " + mark + " | " + letterGrade);
+        		totalMark += mark;
+        		subjectCount++;
+        	}
+        	double average = (double) totalCount/subjectCount;
+        	System.out.println("Average grade: " + average);
+        }
         new Scanner(System.in).nextLine(); // Ждём нажатия Enter, чтобы вернуться
+    }
+    private String getLetterGrade() {
+    	if(mark >= 95 && mark <= 100) {
+    		return "A";
+    	}
+    	else if(mark >= 90 && mark <= 94) {
+    		return "A-";
+    	}
+    	else if(mark >= 85 && mark <= 89) {
+    		return "B+";
+    	}
+    	else if(mark >= 80 && mark <= 84) {
+    		return "B";
+    	}
+    	else if(mark >= 75 && mark <= 79) {
+    		return "B-";
+    	}
+    	else if(mark >= 70 && mark <= 74) {
+    		return "C+";
+    	}
+    	else if(mark >= 65 && mark <= 69) {
+    		return "C";
+    	}
+    	else if(mark >= 60 && mark <= 64) {
+    		return "C-";
+    	}
+    	else if(mark >= 55 && mark <= 59) {
+    		return "D+";
+    	}
+    	else if(mark >= 50 && mark <= 54) {
+    		return "D";
+    	}
+    	else if(mark >= 25 && mark <= 49) {
+    		return "FX";
+    	}
+    	else if(mark >= 0 && mark <= 24) {
+    		return "F";
+    	}
+    }
+    private void DownloadTranscript() {
+    	System.out.println("Transcript downloading ...");
+    	int length = 20;
+		for(int i = 0; i < length; i++) {
+			System.out.print("_");
+			try {
+				Thread.sleep(150);
+			}
+			catch(InterruptedException e){
+				e.printStackTrace();
+				System.out.print("Downloading faild!");
+			}
+		}
+		System.out.println("Transcript downloaded seccessfully!");
     }
 
     public void showNews() {
-		if(Data.Newss.isEmpty()){
+		if(News.isEmpty()){
 			System.out.println("There is no news.");
 		}
 		else {
 			System.out.println("Latest news: ");
-			for(News news : Data.Newss) {
+			for(News news : News) {
 				System.out.println(news);
 			}
 		}

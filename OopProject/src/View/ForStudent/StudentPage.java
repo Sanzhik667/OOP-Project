@@ -1,5 +1,4 @@
-package View.ForStudent ;
-
+package View.ForStudent;
 
 /**
  * <!-- begin-user-doc -->
@@ -8,21 +7,48 @@ package View.ForStudent ;
  * @generated
  */
 
+<<<<<<< HEAD
 import java.util.Scanner;
 import java.util.Map;
 
+=======
+import Data.Organizations;
+import Data.Data;
+import Enums.OrganizationName;
+>>>>>>> branch 'master' of https://github.com/Sanzhik667/OOP-Project.git
 import System.ProjectSystem;
+import Users.Student;
 import Users.User;
+<<<<<<< HEAD
 import Data.News;
 
+=======
+import Users.News;
+
+import java.util.List;
+import java.util.Scanner;
+>>>>>>> branch 'master' of https://github.com/Sanzhik667/OOP-Project.git
 
 public class StudentPage extends ProjectSystem {
+<<<<<<< HEAD
 	private String studentName;
 	private Map<String Map<String, Integer>> marksDataBase;
     public StudentPage(User currentUser, Map<String Map<String, Integer>> marksDataBase, String studentName) {
+=======
+
+    private Student currentStudent;
+    private List<Organizations> organizationsList;
+
+    public StudentPage(User currentUser) {
+>>>>>>> branch 'master' of https://github.com/Sanzhik667/OOP-Project.git
         super(currentUser);
+<<<<<<< HEAD
         this.marksDataBase = marksDataBase;
         this.studentName = currentUser.getFirstName()
+=======
+        this.currentStudent = (Student) currentUser;
+        this.organizationsList = Organizations.loadOrganizations();
+>>>>>>> branch 'master' of https://github.com/Sanzhik667/OOP-Project.git
     }
 
     @Override
@@ -31,11 +57,16 @@ public class StudentPage extends ProjectSystem {
         Scanner scanner = new Scanner(System.in);
 
         while (isRunning) {
-            
             System.out.println("1. View Courses");
             System.out.println("2. View Transcript");
+<<<<<<< HEAD
             System.out.println("3. Show News")
             System.out.println("4. Go Back");
+=======
+            System.out.println("3. Manage Organizations");
+            System.out.println("4. Show News");
+            System.out.println("5. Go Back");
+>>>>>>> branch 'master' of https://github.com/Sanzhik667/OOP-Project.git
             System.out.print("Enter your choice: ");
             int choice = scanner.nextInt();
 
@@ -47,8 +78,12 @@ public class StudentPage extends ProjectSystem {
                     viewTranscript();
                     break;
                 case 3:
-                	showNews();
+                    manageOrganizations();
+                    break;
                 case 4:
+                    showNews();
+                    break;
+                case 5:
                     isRunning = false; // Выход из текущего меню
                     goBack();
                     break;
@@ -59,11 +94,10 @@ public class StudentPage extends ProjectSystem {
     }
 
     private void goBack() {
-		// TODO Auto-generated method stub
-		
-	}
+        // TODO Auto-generated method stub
+    }
 
-	private void viewCourses() {
+    private void viewCourses() {
         boolean isRunning = true;
         Scanner scanner = new Scanner(System.in);
 
@@ -218,6 +252,7 @@ public class StudentPage extends ProjectSystem {
     }
 
     public void showNews() {
+<<<<<<< HEAD
 		if(News.isEmpty()){
 			System.out.println("There is no news.");
 		}
@@ -230,4 +265,117 @@ public class StudentPage extends ProjectSystem {
 	}
     
     
+=======
+        if (Data.Newss.isEmpty()) {
+            System.out.println("There is no news.");
+        } else {
+            System.out.println("Latest news: ");
+            for (News news : Data.Newss) {
+                System.out.println(news);
+            }
+        }
+    }
+
+    // Методы для управления организациями
+    private void manageOrganizations() {
+        boolean isRunning = true;
+        Scanner scanner = new Scanner(System.in);
+
+        while (isRunning) {
+            System.out.println("** Manage Organizations **");
+            System.out.println("1. Join Organization");
+            System.out.println("2. Leave Organization");
+            System.out.println("3. Become Organization Leader");
+            System.out.println("4. View My Organizations");
+            System.out.println("5. Back");
+            System.out.print("Enter your choice: ");
+            int choice = scanner.nextInt();
+            scanner.nextLine(); // Consume newline
+
+            switch (choice) {
+                case 1:
+                    joinOrganization(scanner);
+                    break;
+                case 2:
+                    leaveOrganization(scanner);
+                    break;
+                case 3:
+                    becomeLeader(scanner);
+                    break;
+                case 4:
+                    viewMyOrganizations();
+                    break;
+                case 5:
+                    isRunning = false; // Возврат в основное меню
+                    break;
+                default:
+                    System.out.println("Invalid choice. Try again.");
+            }
+        }
+    }
+
+    private void joinOrganization(Scanner scanner) {
+        System.out.println("Available Organizations:");
+        for (OrganizationName name : OrganizationName.values()) {
+            System.out.println("- " + name);
+        }
+        System.out.print("Enter the organization name to join: ");
+        String orgName = scanner.nextLine().toUpperCase();
+
+        try {
+            OrganizationName organizationName = OrganizationName.valueOf(orgName);
+            Organizations org = findOrganizationByName(organizationName);
+            currentStudent.joinOrganization(org);
+            Organizations.saveOrganizations(organizationsList);
+        } catch (IllegalArgumentException e) {
+            System.out.println("Invalid organization name.");
+        }
+    }
+
+    private void leaveOrganization(Scanner scanner) {
+        System.out.print("Enter the organization name to leave: ");
+        String orgName = scanner.nextLine().toUpperCase();
+
+        try {
+            OrganizationName organizationName = OrganizationName.valueOf(orgName);
+            Organizations org = findOrganizationByName(organizationName);
+            currentStudent.leaveOrganization(org);
+            Organizations.saveOrganizations(organizationsList);
+        } catch (IllegalArgumentException e) {
+            System.out.println("Invalid organization name.");
+        }
+    }
+
+    private void becomeLeader(Scanner scanner) {
+        System.out.print("Enter the organization name to become a leader: ");
+        String orgName = scanner.nextLine().toUpperCase();
+
+        try {
+            OrganizationName organizationName = OrganizationName.valueOf(orgName);
+            Organizations org = findOrganizationByName(organizationName);
+            currentStudent.becomeLeader(org);
+            Organizations.saveOrganizations(organizationsList);
+        } catch (IllegalArgumentException e) {
+            System.out.println("Invalid organization name.");
+        }
+    }
+
+    private void viewMyOrganizations() {
+        System.out.println("Your Organizations:");
+        for (OrganizationName orgName : currentStudent.getOrganizations()) {
+            System.out.println("- " + orgName);
+        }
+    }
+
+    private Organizations findOrganizationByName(OrganizationName name) {
+        for (Organizations org : organizationsList) {
+            if (org.getOrganizationName() == name) {
+                return org;
+            }
+        }
+        Organizations newOrg = new Organizations(name);
+        organizationsList.add(newOrg);
+        return newOrg;
+    }
+>>>>>>> branch 'master' of https://github.com/Sanzhik667/OOP-Project.git
 }

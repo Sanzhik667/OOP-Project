@@ -1,4 +1,4 @@
-package View.ForManager;
+package View;
 
 import System.ProjectSystem;
 import Users.User;

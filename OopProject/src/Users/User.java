@@ -1,12 +1,17 @@
 package Users;
 
+import java.io.Serializable;
 import java.util.Comparator;
 import java.util.List;
 
 import Users.Researcher.ResearchPaper;
 import Users.Researcher.Researcher;
 
-public class User implements Researcher{
+public class User implements Researcher, Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String id;
 	private String firstName;
 	private String lastName;
@@ -101,6 +106,26 @@ public class User implements Researcher{
 
     public String getRole() {
         return role;
+    }
+ // Сеттеры
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 
     @Override

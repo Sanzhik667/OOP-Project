@@ -1,8 +1,10 @@
-package View.ForTeacher ;
+package View ;
 
 import java.util.Scanner;
 
+import Data.News;
 import System.ProjectSystem;
+import System.Serializator;
 import Users.User;
 
 /**
@@ -138,12 +140,12 @@ public class TeacherPage extends ProjectSystem {
     }
     
     public void showNews() {
-		if(Data.Newss.isEmpty()){
+		if(Serializator.News.isEmpty()){
 			System.out.println("There is no news.");
 		}
 		else {
 			System.out.println("Latest news: ");
-			for(News news : Data.Newss) {
+			for(News news : Serializator.News) {
 				System.out.println(news);
 			}
 		}

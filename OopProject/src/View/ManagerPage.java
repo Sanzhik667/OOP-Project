@@ -1,4 +1,4 @@
-package View.ForManager;
+package View;
 
 import System.ProjectSystem;
 import Users.User;
@@ -40,14 +40,14 @@ public class ManagerPage extends ProjectSystem {
                 case 4:
                 	showNews();
                 case 5:
-                	manageNews();
+                	manageNews(scanner);
                 case 6:
                     isRunning = false; // Выход из текущего меню
                     break;
                 default:
                     System.out.println("Invalid choice. Try again.");
             }
-        }
+        } //
     }
 
     private void processRequests() {

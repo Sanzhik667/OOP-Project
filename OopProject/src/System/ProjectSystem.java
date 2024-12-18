@@ -2,24 +2,33 @@ package System ;
 
 
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
-import Data.Data;
+import Enums.Semester;
 import Users.User;
-import View.ForAdmin.AdminPage;
-import View.ForStudent.StudentPage;
+import View.AdminPage;
+import View.StudentPage;
+import View.TeacherPage;
 
-public class ProjectSystem extends Data{
+public class ProjectSystem extends Serializator{
 	 // Ключ — логин, значение — объект User  
     protected User currentUser; // Логин текущего пользователя
-    
-    
+    private Map<String, String> messages; // Карта сообщений
+    private LanguageManager languageManager;
+   
+
     public ProjectSystem() {
+        // Инициализация LanguageManager в конструкторе
+        languageManager = new LanguageManager();
         this.usersDatabase = new HashMap<>();
         initializeUsers(); // Заполняем базу данными
     }
+
     
-    public ProjectSystem(User currentUser2) {
+
+    
+    public ProjectSystem(User currentUser) {
 		// TODO Auto-generated constructor stub
 	}
 
@@ -34,10 +43,10 @@ public class ProjectSystem extends Data{
         User user = usersDatabase.get(login);
         if (user != null && user.getPassword().equals(password)) {
             currentUser = user;
-            System.out.println("Welcome, " + currentUser.getFirstName() + "!");
+            System.out.println(languageManager.getMessage("welcome") + currentUser.getFirstName() + "!");
             return true;
         }
-        System.out.println("Invalid login or password. Try again.");
+        System.out.println(languageManager.getMessage("invalid"));
         return false;
     }
 
@@ -68,8 +77,8 @@ public class ProjectSystem extends Data{
                 break;
 
             case "Teacher":
-            	StudentPage studentPage = new StudentPage(currentUser);
-                studentPage.handleUserActions();
+            	TeacherPage teacherPage = new TeacherPage(currentUser);
+                teacherPage.handleUserActions();
                 break;
 
             case "Admin":
@@ -84,33 +93,39 @@ public class ProjectSystem extends Data{
         }
     }
 
+    
     // Основной цикл работы системы
     public void run() {
         Scanner scanner = new Scanner(System.in);
         boolean isRunning = true;
 
+      
+        languageManager.selectLanguage(); // Выбор языка
+
         while (isRunning) {
-            System.out.println("Welcome to the System!");
-            System.out.print("Enter login: ");
+            System.out.println(languageManager.getMessage("welcome"));
+            System.out.println(languageManager.getMessage("current_semester") 
+                               + " " + Semester.getCurrentSemester().getDescription());
+            
+            System.out.print(languageManager.getMessage("login_prompt"));
             String login = scanner.nextLine();
-            System.out.print("Enter password: ");
+            System.out.print(languageManager.getMessage("password_prompt"));
             String password = scanner.nextLine();
 
             if (authenticate(login, password)) {
                 handleUserActions();
-            } else {
-                System.out.println("Login failed.");
-            }
+            } 
 
-            System.out.println("Do you want to exit? (yes/no)");
+            System.out.println(languageManager.getMessage("exit_prompt"));
             String exitInput = scanner.nextLine();
-            isRunning = !exitInput.equalsIgnoreCase("yes");
+            isRunning = !exitInput.equalsIgnoreCase("yes") && !exitInput.equalsIgnoreCase("иә") && !exitInput.equalsIgnoreCase("да");
         }
 
         System.out.println("System shutting down...");
     }
-}
 
+   
+}
 
 //private String currentRole; // Роль текущего пользователя (Student, Teacher, Admin и т.д.)
 //private Page currentPage; // Текущая страница

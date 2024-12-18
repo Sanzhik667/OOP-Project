@@ -1,36 +1,63 @@
 package Users;
 
-import java.util.HashMap;
-import java.util.Vector;
+import java.io.Serializable;
 
-import Data.Course;
 import Enums.Faculty;
-import Enums.Id;
-import wsp.Mark;
-import wsp.Transcript;
 
-public class Student extends User{
-	private static final long serialVersionUID = 6860660265750071533L;
-	private HashMap<Course,Teacher> teachers;
-	private Faculty faculty;
-	private Transcript transcript;
-	protected int age;
-	protected int phoneNumber;
-	Vector<Course> course = new Vector<Course>();
-	Vector<Mark> mark;
-	Data data = Data.getInstance();
-	
-	public Student() {}
-	public Student(String login,String password,String firstName, String lastName,int age,int phoneNumber,Vector<Mark> mark) {
-		super(login,password,firstName,lastName);
-		this.age = age;
-		this.phoneNumber = phoneNumber;
-		this.mark = mark;
-	}
-	
-	public Student(Id id, String firstName, String lastName, String email, String password) {
-        super();
+public class Student extends User implements Serializable {
+    private static final long serialVersionUID = 6860660265750071533L;
+
+    private Faculty faculty;
+    protected int age;
+    protected int phoneNumber;
+
+    // Конструктор для класса Student
+    public Student(String id, String email, String password, String firstName, String lastName, String role,
+                   Faculty faculty, int age, int phoneNumber) {
+        super(id, email, password, firstName, lastName, role); // Вызов конструктора родителя
+        this.faculty = faculty;
+        this.age = age;
+        this.phoneNumber = phoneNumber;
     }
 
-   
+    // Геттеры и сеттеры для новых полей
+    public Faculty getFaculty() {
+        return faculty;
+    }
+
+    public void setFaculty(Faculty faculty) {
+        this.faculty = faculty;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public int getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(int phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    // Переопределение метода toString() для удобного отображения данных студента
+    @Override
+    public String toString() {
+        return "Student{" +
+                "ID='" + getId() + '\'' +
+                ", FirstName='" + getFirstName() + '\'' +
+                ", LastName='" + getLastName() + '\'' +
+                ", Email='" + getEmail() + '\'' +
+                ", Role='" + getRole() + '\'' +
+                ", Faculty=" + faculty +
+                ", Age=" + age +
+                ", PhoneNumber=" + phoneNumber +
+                '}';
+    }
 }
+

@@ -1,4 +1,5 @@
-package Data;
+
+package System;
 
 import java.io.EOFException;
 import java.io.FileInputStream;
@@ -7,24 +8,35 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Vector;
 
+import Data.Course;
 import Users.Admin;
 import Users.Employee;
 import Users.Manager;
 import Users.Student;
 import Users.Teacher;
+import Users.User;
 
 
-public class Data implements Serializable{
+public class Serializator implements Serializable{
 	
     private static final long serialVersionUID = -3687448572749462892L;
-	private static  Data Instance = new Data();
+	private static  Serializator Instance = new Serializator();
+	protected Map<String, User> usersDatabase;
+    protected Map<String, Object> coursesDatabase;
+
+    public Serializator() {
+        this.usersDatabase = new HashMap<>();
+        this.coursesDatabase = new HashMap<>();
+    }
+
 	
-	private Data(){}
 	
-	public static Data getInstance() {
+	public static Serializator getInstance() {
 		return Instance;
 	}
 	
@@ -168,13 +180,15 @@ public class Data implements Serializable{
 	
 	
 	
-	public static Admin admin = new Admin();
+	public static Admin admin = new Admin(null, null, null, null, null, null);
 	public static Manager manager = new Manager();
 	public static Teacher teacher = new Teacher();
-	public static Student student = new Student();
+	public static Student student = new Student(null, null, null, null, null, null, null, 0, 0);
 
 	public static Course course = new Course();
 	
 	
 }
+
+
 

@@ -1,4 +1,4 @@
-package View.ForStudent ;
+package View ;
 
 
 /**
@@ -9,6 +9,7 @@ package View.ForStudent ;
 
 import java.util.Scanner;
 
+import Data.News;
 import System.ProjectSystem;
 import Users.User;
 
@@ -27,7 +28,8 @@ public class StudentPage extends ProjectSystem {
             
             System.out.println("1. View Courses");
             System.out.println("2. View Transcript");
-            System.out.println("3. Go Back");
+            System.out.println("3. Show News: ");
+            System.out.println("4. Go Back");
             System.out.print("Enter your choice: ");
             int choice = scanner.nextInt();
 
@@ -39,6 +41,8 @@ public class StudentPage extends ProjectSystem {
                     viewTranscript();
                     break;
                 case 3:
+                	showNews();
+                case 4:
                     isRunning = false; // Выход из текущего меню
                     goBack();
                     break;
@@ -138,5 +142,17 @@ public class StudentPage extends ProjectSystem {
         new Scanner(System.in).nextLine(); // Ждём нажатия Enter, чтобы вернуться
     }
 
+    public void showNews() {
+		if(Data.News.isEmpty()){
+			System.out.println("There is no news.");
+		}
+		else {
+			System.out.println("Latest news: ");
+			for(News news : Data.Newss) {
+				System.out.println(news);
+			}
+		}
+	}
+    
     
 }

@@ -8,48 +8,23 @@ import java.io.Serializable;
  * @generated
  */
 
-public class Admin extends Employee implements Serializable
-{
-	private static final long serialVersionUID = 3998840202673599825L;
-	public Admin(){
-		super();
-	}
+public class Admin extends User implements Serializable {
+    private static final long serialVersionUID = 1L;
 
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 * @ordered
-	 */
-	
-	public boolean addUser() {
-		// TODO implement me
-		return false;	
-	}
-	
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 * @ordered
-	 */
-	
-	public boolean updateUser() {
-		// TODO implement me
-		return false;	
-	}
-	
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!--  end-user-doc  -->
-	 * @generated
-	 * @ordered
-	 */
-	
-	public boolean removeUser() {
-		// TODO implement me
-		return false;	
-	}
-	
+    public Admin(String id, String firstName, String lastName, String email, String password, String role) {
+        super(id, firstName, lastName, email, password, role);
+    }
+
+    @Override
+    public String toString() {
+        return "Admin{" +
+                "id='" + getId() + '\'' +
+                ", firstName='" + getFirstName() + '\'' +
+                ", lastName='" + getLastName() + '\'' +
+                ", email='" + getEmail() + '\'' +
+                ", role='" + getRole() + '\'' +
+                '}';
+    }
 }
+
 
